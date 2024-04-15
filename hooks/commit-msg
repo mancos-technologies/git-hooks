@@ -7,13 +7,12 @@ from subprocess import check_output
 commit_msg_filepath = sys.argv[1]
 
 # Figure out which branch we're on
-branch = check_output(['git', 'symbolic-ref', '--short', 'HEAD']).strip()
-print "commit-msg: On branch '%s'" % branch
+branch = check_output(['git', 'symbolic-ref', '--short', 'HEAD']).decode().strip()
 
 if branch != "main":
     with open(commit_msg_filepath, 'r') as f:
         first_line = f.readline().strip()
         result = re.match('\[[A-Za-z]+-[0-9]+\]', first_line)
         if result == None:
-            print "commit-msg: ERROR! The commit message must start with the Jira issue"
+            print("commit-msg: ERROR! The commit message must start with the Jira issue")
             sys.exit(1)

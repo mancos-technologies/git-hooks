@@ -12,11 +12,10 @@ else:
     commit_type = ''
 
 # Figure out which branch we're on
-branch = check_output(['git', 'symbolic-ref', '--short', 'HEAD']).strip()
-print "prepare-commit-msg: On branch '%s'" % branch
+branch = check_output(['git', 'symbolic-ref', '--short', 'HEAD']).decode().strip()
 
 # Populate the commit message with the issue #, if there is one
-result = re.match('([A-Za-z]+-[0-9]+)[_-/:;]', branch)
+result = re.match('([A-Za-z]+-[0-9]+)[_\-/:;]', branch)
 if result:
     issue_number = result.group(1)
     with open(commit_msg_filepath, 'r+') as f:
